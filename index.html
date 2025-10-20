@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Name – Portfolio</title>
+  <meta name="description" content="Portfolio of Your Name – web developer and designer." />
+  <style>
+    /* ------------------
+       Base & Theme
+    -------------------*/
+    :root{
+      --bg:#0f1220; /* deep navy */
+      --panel:#161a2b; /* card background */
+      --muted:#aab3c5;
+      --text:#f3f5fa;
+      --brand:#7c9cff; /* accent */
+      --brand-2:#67e8f9; /* secondary accent */
+      --ring: rgba(124,156,255,0.35);
+      --radius: 16px;
+      --shadow: 0 8px 30px rgba(0,0,0,.25);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background: radial-gradient(1200px 500px at 10% -10%, rgba(124,156,255,.15), transparent 70%),
+                                 radial-gradient(900px 400px at 100% 10%, rgba(103,232,249,.12), transparent 60%),
+                                 var(--bg);
+      color:var(--text); font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
+    }
+    img{max-width:100%; display:block}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Layout */
+    .container{max-width:1100px; margin-inline:auto; padding:24px}
+    header{
+      position:sticky; top:0; z-index:20; backdrop-filter: blur(8px);
+      background: rgba(15,18,32,.6); border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700}
+    .brand .logo{width:36px; height:36px; border-radius:10px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: 0 6px 16px var(--ring);}
+    .links{display:flex; gap:18px; align-items:center}
+    .links a{color:var(--text); opacity:.9}
+    .btn{
+      display:inline-block; padding:10px 14px; border-radius:12px; background:linear-gradient(135deg,var(--brand),var(--brand-2));
+      color:#0b1020; font-weight:700; box-shadow:0 10px 24px var(--ring);
+    }
+
+    /* Mobile nav */
+    .menu-btn{display:none; border:1px solid rgba(255,255,255,.14); background:transparent; color:var(--text); padding:8px 10px; border-radius:12px}
+    @media (max-width: 720px){
+      .links{display:none}
+      .links.open{display:flex; flex-direction:column; align-items:flex-start; padding:14px 0}
+      .menu-btn{display:inline-flex}
+    }
+
+    /* Hero */
+    .hero{padding:64px 0 24px}
+    .hero h1{font-size: clamp(28px, 3.6vw, 46px); line-height:1.15; margin:0 0 12px}
+    .hero p{max-width:700px; color:var(--muted); margin:0 0 20px}
+    .hero .actions{display:flex; gap:12px; flex-wrap:wrap}
+    .pill{border:1px solid rgba(255,255,255,.14); padding:8px 12px; border-radius:999px; color:var(--muted)}
+
+    /* Section */
+    section{padding:28px 0}
+    h2{font-size: clamp(20px,2.2vw,28px)}
+    .subtle{color:var(--muted)}
+
+    /* Cards grid */
+    .grid{display:grid; gap:16px; grid-template-columns: repeat(12, 1fr)}
+    .col-4{grid-column: span 4}
+    .col-6{grid-column: span 6}
+    @media (max-width: 900px){ .col-4, .col-6{grid-column: span 6} }
+    @media (max-width: 640px){ .col-4, .col-6{grid-column: span 12} }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      border:1px solid rgba(255,255,255,.08); border-radius: var(--radius); overflow:hidden; box-shadow: var(--shadow);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .card:hover{ transform: translateY(-3px); border-color: rgba(124,156,255,.35) }
+    .card .media{aspect-ratio: 16/9; background: #1c2238; display:grid; place-items:center; color:#90a0c8; font-size:14px}
+    .card .body{padding:14px}
+    .tag{display:inline-block; font-size:12px; color:#0b1020; background: linear-gradient(135deg, var(--brand), var(--brand-2)); padding:4px 10px; border-radius:999px; font-weight:700}
+
+    .stack{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+    .chip{border:1px solid rgba(255,255,255,.14); padding:6px 10px; border-radius:999px; color:var(--muted); font-size:13px}
+
+    /* About */
+    .about{display:grid; grid-template-columns: 1.2fr .8fr; gap:18px}
+    .about .panel{background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:18px; box-shadow: var(--shadow)}
+    .about h3{margin-top:0}
+    @media (max-width: 860px){ .about{grid-template-columns: 1fr} }
+
+    /* Contact */
+    .contact{
+      display:grid; grid-template-columns: 1fr 1fr; gap:18px
+    }
+    @media (max-width: 800px){ .contact{grid-template-columns: 1fr} }
+    .contact .panel{background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:18px; box-shadow: var(--shadow)}
+    .contact a.btn{display:inline-block}
+
+    footer{padding:40px 0; color:var(--muted); text-align:center}
+  </style>
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>Your Name</span>
+      </div>
+      <button class="menu-btn" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <nav id="nav-links" class="links" aria-label="Primary">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="btn" href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="intro">
+      <span class="pill">Available for freelance & internships</span>
+      <h1 id="intro">Hi, I’m Your Name — I build clean, accessible, and fast websites.</h1>
+      <p>
+        I specialize in modern front‑end development and great UX. I love turning ideas into polished products using HTML, CSS, JavaScript, and frameworks like React.
+      </p>
+      <div class="actions">
+        <a class="btn" href="#projects">See Projects</a>
+        <a class="btn" href="./resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" aria-labelledby="work">
+      <h2 id="work">Selected Projects</h2>
+      <p class="subtle">A few things I’ve built recently.</p>
+      <div class="grid" role="list">
+        <!-- Project Card 1 -->
+        <article class="card col-6" role="listitem">
+          <div class="media">
+            <span>Project Screenshot</span>
+          </div>
+          <div class="body">
+            <span class="tag">Featured</span>
+            <h3>Project One</h3>
+            <p>A responsive portfolio site with a11y‑first design and smooth animations.</p>
+            <div class="stack">
+              <span class="chip">HTML</span>
+              <span class="chip">CSS</span>
+              <span class="chip">JavaScript</span>
+            </div>
+            <p>
+              <a href="#" target="_blank" rel="noopener">Live</a> ·
+              <a href="#" target="_blank" rel="noopener">Code</a>
+            </p>
+          </div>
+        </article>
+        <!-- Project Card 2 -->
+        <article class="card col-6" role="listitem">
+          <div class="media"><span>Project Screenshot</span></div>
+          <div class="body">
+            <h3>Project Two</h3>
+            <p>Interactive data dashboard with charts and keyboard‑friendly controls.</p>
+            <div class="stack">
+              <span class="chip">Vite</span>
+              <span class="chip">React</span>
+              <span class="chip">API</span>
+            </div>
+            <p>
+              <a href="#" target="_blank" rel="noopener">Live</a> ·
+              <a href="#" target="_blank" rel="noopener">Code</a>
+            </p>
+          </div>
+        </article>
+        <!-- Project Card 3 -->
+        <article class="card col-4" role="listitem">
+          <div class="media"><span>Project Screenshot</span></div>
+          <div class="body">
+            <h3>UI Component Library</h3>
+            <p>Reusable, accessible components with docs and theming.</p>
+            <div class="stack">
+              <span class="chip">CSS</span>
+              <span class="chip">ARIA</span>
+            </div>
+            <p><a href="#">Code</a></p>
+          </div>
+        </article>
+        <!-- Project Card 4 -->
+        <article class="card col-4" role="listitem">
+          <div class="media"><span>Project Screenshot</span></div>
+          <div class="body">
+            <h3>Marketing Landing</h3>
+            <p>High‑converting page with semantic HTML and great Lighthouse scores.</p>
+            <div class="stack">
+              <span class="chip">HTML</span>
+              <span class="chip">CSS</span>
+            </div>
+            <p><a href="#">Live</a></p>
+          </div>
+        </article>
+        <!-- Project Card 5 -->
+        <article class="card col-4" role="listitem">
+          <div class="media"><span>Project Screenshot</span></div>
+          <div class="body">
+            <h3>Todo App</h3>
+            <p>Offline‑first PWA with local storage and keyboard shortcuts.</p>
+            <div class="stack">
+              <span class="chip">JavaScript</span>
+              <span class="chip">PWA</span>
+            </div>
+            <p>
+              <a href="#">Live</a> · <a href="#">Code</a>
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about" aria-labelledby="about-title">
+      <div class="panel">
+        <h2 id="about-title">About</h2>
+        <p>
+          I’m a front‑end developer focused on building accessible, performant, and delightful user interfaces. I enjoy design systems, micro‑interactions, and writing clean, maintainable CSS.
+        </p>
+        <p>
+          When I’m not coding, I’m learning new tools, sharing tips, and exploring ways to make the web faster and more inclusive.
+        </p>
+      </div>
+      <div class="panel">
+        <h3>Skills</h3>
+        <ul>
+          <li>Semantic HTML & modern CSS (Flexbox, Grid)</li>
+          <li>JavaScript / TypeScript</li>
+          <li>React, Vite, basic Next.js</li>
+          <li>Accessibility (WCAG) & performance</li>
+          <li>Git, GitHub Actions, CI/CD</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <div class="panel">
+        <h2 id="contact-title">Get in touch</h2>
+        <p class="subtle">Have a project or opportunity? I’d love to hear from you.</p>
+        <p>
+          <a class="btn" href="mailto:you@email.com">Email me</a>
+        </p>
+      </div>
+      <div class="panel">
+        <h3>Elsewhere</h3>
+        <ul>
+          <li><a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://x.com/yourhandle" target="_blank" rel="noopener">X / Twitter</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Your Name. Built with HTML & CSS. Deployed on GitHub Pages.</p>
+  </footer>
+
+  <script>
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const btn = document.querySelector('.menu-btn');
+    const links = document.querySelector('.links');
+    btn?.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      links.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
