@@ -54,11 +54,14 @@ header{position:sticky;top:0;z-index:50;
   border-bottom:1px solid color-mix(in oklab,var(--text),transparent 85%)}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:14px;position:relative}
 .brand{display:flex;gap:12px;align-items:center;font-weight:800;min-height:44px}
-.logo{width:38px;height:38px;border-radius:12px;box-shadow:var(--ring);
-  background: url('images/k-logo.gif');
-  position:relative;isolation:isolate}
-.logo::after{content:"";position:absolute;inset:3px;border-radius:10px;
-  background:url('images/k-logo.gif')}
+/* FIXED: Logo image not cut off */
+.logo{
+  width:38px;height:38px;border-radius:12px;box-shadow:var(--ring);
+  background: url('images/k-logo.gif') center / contain no-repeat;
+  position:relative;isolation:isolate;overflow:hidden;
+}
+/* remove the old overlay so it can’t crop the image */
+.logo::after{content:none}
 .links{display:flex;gap:18px;align-items:center}
 .btn,.ghost{display:inline-flex;align-items:center;justify-content:center;
   padding:10px 14px;border-radius:12px;min-height:44px}
@@ -93,9 +96,17 @@ header{position:sticky;top:0;z-index:50;
 .pill{border:1px solid color-mix(in oklab,var(--text),transparent 80%);
   padding:8px 12px;border-radius:999px;color:var(--muted)}
 .hero-image{display:flex;align-items:center;justify-content:center}
-.hero-image img{width:100%;max-width:500px;}
-@media(max-width:900px){.hero{grid-template-columns:1fr;text-align:center}.hero-image{order:-1}}
-
+/* polish your hero image */
+.hero-image img{
+  width:100%;max-width:500px;max-height:520px;
+  border-radius:20px;box-shadow:var(--shadow);
+  border:1px solid color-mix(in oklab,var(--text),transparent 85%);
+  object-fit:cover; /* tidy crop without distortion */
+}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .hero-image{order:-1}
+}
 /* =============================================
    PROJECTS
 ============================================= */
@@ -206,7 +217,7 @@ footer{padding:20px 0;color:var(--muted);text-align:center}
       </div>
     </div>
     <div class="hero-image">
-      <img src="me.png" alt="Kimberly Moncal" max-width="500px" height="100%"/>
+      <img src="me.png" alt="Kimberly Moncal"/>
     </div>
   </section>
 
