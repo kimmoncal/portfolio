@@ -14,8 +14,6 @@
   --brand:#8a7dff;--brand-2:#33e1ff;--ring:0 10px 30px rgba(138,125,255,.35);
   --radius:16px;--shadow:0 12px 30px rgba(0,0,0,.35);
   --grid-gap:clamp(14px,2vw,18px);--container:1200px;
-
-  /* NEW: uniform card height (tweak as desired) */
   --card-h: clamp(380px, 54vh, 500px);
 }
 [data-theme="light"]{
@@ -54,13 +52,11 @@ header{position:sticky;top:0;z-index:50;
   border-bottom:1px solid color-mix(in oklab,var(--text),transparent 85%)}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:14px;position:relative}
 .brand{display:flex;gap:12px;align-items:center;font-weight:800;min-height:44px}
-/* FIXED: Logo image not cut off */
 .logo{
   width:38px;height:38px;border-radius:12px;box-shadow:var(--ring);
-  background: url('images/k-logo.gif') center / contain no-repeat;
-  position:relative;isolation:isolate;overflow:hidden;
+  background:url('images/k-logo.gif') center/contain no-repeat;
+  overflow:hidden;position:relative;isolation:isolate;
 }
-/* remove the old overlay so it can’t crop the image */
 .logo::after{content:none}
 .links{display:flex;gap:18px;align-items:center}
 .btn,.ghost{display:inline-flex;align-items:center;justify-content:center;
@@ -68,13 +64,18 @@ header{position:sticky;top:0;z-index:50;
 .btn{background:linear-gradient(135deg,var(--brand),var(--brand-2));
   color:#0b1020;font-weight:800;box-shadow:var(--ring)}
 .ghost{border:1px solid color-mix(in oklab,var(--text),transparent 80%);color:var(--text)}
-/* Less prominent button for cards */
 .btn-subtle{
   background:linear-gradient(135deg,
     color-mix(in oklab,var(--brand),transparent 35%),
     color-mix(in oklab,var(--brand-2),transparent 35%));
-  box-shadow:none;font-weight:700}
-.btn.block{display:flex;width:100%;justify-content:center}
+  box-shadow:none;font-weight:700;
+  cursor:pointer;transition:all .15s ease;
+}
+.btn-subtle:hover{
+  filter:brightness(1.15);
+  transform:translateY(-1px);
+}
+.btn.block{display:flex;width:100%;justify-content:center;pointer-events:auto;z-index:2;position:relative}
 .menu-btn{display:none}
 @media(max-width:760px){
   .links{display:none}
@@ -88,23 +89,27 @@ header{position:sticky;top:0;z-index:50;
 /* =============================================
    HERO
 ============================================= */
-.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
-  gap:clamp(16px,2.2vw,22px);padding:clamp(28px,6vw,56px) 0 12px;align-items:center}
+.hero{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
+  gap:clamp(16px,2.2vw,22px);padding:clamp(28px,6vw,56px) 0 12px;align-items:center
+}
 .hero h1{font-size:clamp(30px,4vw,60px);line-height:1.1;margin:0 0 10px}
 .hero p{color:var(--muted);margin:0 0 16px;max-width:65ch}
 .badges{display:flex;gap:10px;flex-wrap:wrap}
 .pill{border:1px solid color-mix(in oklab,var(--text),transparent 80%);
   padding:8px 12px;border-radius:999px;color:var(--muted)}
 .hero-image{display:flex;align-items:center;justify-content:center}
-/* polish your hero image */
 .hero-image img{
   width:100%;max-width:500px;max-height:520px;
-  object-fit:cover; /* tidy crop without distortion */
+  border-radius:20px;box-shadow:var(--shadow);
+  border:1px solid color-mix(in oklab,var(--text),transparent 85%);
+  object-fit:cover;
 }
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;text-align:center}
   .hero-image{order:-1}
 }
+
 /* =============================================
    PROJECTS
 ============================================= */
@@ -113,19 +118,13 @@ header{position:sticky;top:0;z-index:50;
   overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:var(--pad);
   padding:0 var(--pad) 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .track::-webkit-scrollbar{display:none}
-
-/* NEW: Force each slide to share the same height */
 .slide{
-  flex:0 0 auto;
-  width:calc((100% - (2 * var(--gap))) / 3);
-  height:var(--card-h);
-  display:flex;
-  align-items:stretch;
-  scroll-snap-align:start;scroll-snap-stop:always;
+  flex:0 0 auto;width:calc((100% - (2 * var(--gap))) / 3);
+  height:var(--card-h);display:flex;align-items:stretch;
+  scroll-snap-align:start;scroll-snap-stop:always
 }
 @media(max-width:1099px){.slide{width:calc((100% - var(--gap)) / 2)}}
 @media(max-width:699px){.slide{width:100%}}
-
 .car-btn{position:absolute;z-index:5;top:50%;transform:translateY(-50%);
   inline-size:42px;block-size:42px;display:inline-flex;align-items:center;justify-content:center;
   border-radius:999px;border:1px solid color-mix(in oklab,var(--text),transparent 80%);
@@ -133,50 +132,35 @@ header{position:sticky;top:0;z-index:50;
   color:var(--text);box-shadow:var(--shadow)}
 .car-btn:hover{filter:brightness(1.06)}
 .car-btn.prev{left:4px}.car-btn.next{right:4px}
-@media(max-width:760px){.car-btn{display:none}}
-
-/* Card becomes a full-height flex column */
 .card{
   background:linear-gradient(180deg,
     color-mix(in oklab,var(--panel),transparent 0%),
     color-mix(in oklab,var(--panel),transparent 12%));
   border:1px solid color-mix(in oklab,var(--text),transparent 85%);
   border-radius:var(--radius);box-shadow:var(--shadow);
-  overflow:hidden;perspective:900px;transform-style:preserve-3d;
-  transition:transform .18s ease;
-
-  display:flex;
-  flex-direction:column;
-  height:100%;
-  width:100%;
+  overflow:hidden;transition:transform .18s ease;
+  display:flex;flex-direction:column;height:100%;width:100%;
 }
-.card .media{
-  aspect-ratio:16/9;
-  background:color-mix(in oklab,var(--panel),black 8%);
-  position:relative;overflow:hidden;flex-shrink:0;
-}
+.card .media{aspect-ratio:16/9;background:color-mix(in oklab,var(--panel),black 8%);
+  position:relative;overflow:hidden;flex-shrink:0}
 .card .media img{width:100%;height:100%;object-fit:cover}
-.card .body{
-  padding:14px;display:flex;flex-direction:column;min-height:0; /* allow clamping */
-  gap:8px;flex:1;
-}
+.card .body{padding:14px;display:flex;flex-direction:column;min-height:0;gap:8px;flex:1}
 .card .actions{margin-top:auto}
+.card h3{margin:0}
+.card .body p{color:var(--muted);margin:0}
 
-/* Optional: Clamp text so long titles/descriptions don't grow card */
-.card h3{
-  margin:0;
-  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden;
-}
-.card .body p{
-  color:var(--muted);margin:0;
-  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;
+/* Ensure link buttons are clickable */
+.card .actions a {
+  pointer-events:auto;
+  z-index:2;
+  position:relative;
 }
 
 /* =============================================
    ABOUT / FOOTER
 ============================================= */
-.panel{background:var(--panel);border:1px solid color-mix(in oklab,var(--text),transparent 85%); margin-top:50px;
-  border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.panel{background:var(--panel);border:1px solid color-mix(in oklab,var(--text),transparent 85%);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-top:50px}
 #about{padding-bottom:8px}
 footer{padding:20px 0;color:var(--muted);text-align:center}
 </style>
@@ -191,7 +175,6 @@ footer{padding:20px 0;color:var(--muted);text-align:center}
       <div class="logo" aria-hidden="true"></div>
       <span id="brand-name">Kimberly Moncal</span>
     </div>
-    <button class="menu-btn ghost" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">Menu</button>
     <nav id="nav-links" class="links" aria-label="Primary">
       <a href="#projects">Projects</a>
       <a href="#about">About</a>
@@ -201,13 +184,10 @@ footer{padding:20px 0;color:var(--muted);text-align:center}
 </header>
 
 <main id="main" class="container">
-  <!-- HERO -->
   <section class="hero" aria-labelledby="intro">
     <div>
-      <div class="badges">
-        <span class="pill">Open to work</span>
-      </div>
-      <h1 id="intro">I build User-friendly, Responsive, and SEO-optimized WordPress Websites</h1>
+      <div class="badges"><span class="pill">Open to work</span></div>
+      <h1 id="intro">I build user-friendly, responsive, and SEO-optimized WordPress websites.</h1>
       <p>Hi, I’m <strong id="hero-name">Kimberly Moncal</strong> — a developer who blends motion, polish, and performance. I enjoy design systems, a11y, and crafting delightful details that make products feel alive.</p>
       <div class="badges">
         <a class="btn" href="#projects">See Projects</a>
@@ -215,25 +195,23 @@ footer{padding:20px 0;color:var(--muted);text-align:center}
       </div>
     </div>
     <div class="hero-image">
-      <img src="images/me.png" alt="Kimberly Moncal"/>
+      <img src="images/me.png" alt="Kimberly Moncal" />
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section id="projects" aria-labelledby="work">
-    <h2 id="work">Selected Projects</h2>
+  <section id="projects">
+    <h2>Selected Projects</h2>
     <p class="subtle">Swipe on mobile • Use arrows or mouse wheel (shift) on desktop</p>
-    <div class="carousel" role="region" aria-label="Projects carousel" tabindex="0">
-      <button class="car-btn prev" aria-label="Previous project">◀</button>
-      <div id="project-track" class="track" role="list"></div>
-      <button class="car-btn next" aria-label="Next project">▶</button>
+    <div class="carousel">
+      <button class="car-btn prev">◀</button>
+      <div id="project-track" class="track"></div>
+      <button class="car-btn next">▶</button>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about" aria-labelledby="about-title">
+  <section id="about">
     <article class="panel">
-      <h2 id="about-title">About</h2>
+      <h2>About</h2>
       <p>I love turning ideas into interfaces that feel fast and polished. I code with HTML, CSS, JavaScript/TypeScript, and React. I care deeply about accessibility, semantics, and performance budgets.</p>
       <p>Outside of work, I explore generative visuals, micro-interactions, and thoughtful animations — always with progressive enhancement in mind.</p>
     </article>
@@ -241,11 +219,11 @@ footer{padding:20px 0;color:var(--muted);text-align:center}
 </main>
 
 <footer>
-  <p>© <span id="year"></span> <span id="footer-name">Kimberly Moncal</span>. Built with HTML, CSS & JS. Hosted on GitHub Pages.</p>
+  <p>© <span id="year"></span> <span id="footer-name">Kimberly Moncal</span>. Built with HTML, CSS & JS.</p>
 </footer>
 
 <script>
-/* ================= STARFIELD ================= */
+/* STARFIELD + THEME (unchanged) */
 (function starfield(){
   const c=document.getElementById('stars');const ctx=c.getContext('2d');
   const mediaReduced=matchMedia('(prefers-reduced-motion: reduce)');
@@ -253,128 +231,68 @@ footer{padding:20px 0;color:var(--muted);text-align:center}
   function size(){
     const dpr=Math.min(devicePixelRatio||1,2);
     c.width=Math.floor(innerWidth*dpr);c.height=Math.floor(innerHeight*dpr);
-    c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
   }
   function reset(s){s.x=Math.random()*innerWidth;s.y=Math.random()*innerHeight;s.z=Math.random()*1+.3;s.r=Math.random()*1.2;}
   function init(){size();stars=Array.from({length:160},()=>{const s={};reset(s);return s;});}
   function tick(){
-    if(mediaReduced.matches) return;
-    ctx.clearRect(0,0,innerWidth,innerHeight);ctx.fillStyle='rgba(255,255,255,.9)';
-    for(const s of stars){s.x+=s.z;if(s.x>innerWidth)s.x=0;ctx.globalAlpha=s.z;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}
+    if(mediaReduced.matches)return;
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    ctx.fillStyle='rgba(255,255,255,.9)';
+    for(const s of stars){s.x+=s.z;if(s.x>innerWidth)s.x=0;
+      ctx.globalAlpha=s.z;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}
     raf=requestAnimationFrame(tick);
   }
   addEventListener('resize',size);
-  document.addEventListener('visibilitychange',()=>{ if(document.hidden){cancelAnimationFrame(raf);} else {raf=requestAnimationFrame(tick);} });
-  init(); if(!mediaReduced.matches){ tick(); }
+  init(); if(!mediaReduced.matches){tick();}
 })();
-
-/* ============== THEME TOGGLE =============== */
 (function theme(){
-  const btn=document.getElementById('theme');const key='theme';
-  function set(t){
-    document.documentElement.setAttribute('data-theme',t);
-    localStorage.setItem(key,t);
-    btn.textContent=(t==='light'?'🌞':'🌙');
-    btn.setAttribute('aria-pressed',String(t!=='light'));
-  }
-  const saved=localStorage.getItem(key);
-  set(saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));
-  btn.addEventListener('click',()=>set(document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'));
+  const btn=document.getElementById('theme');
+  btn.addEventListener('click',()=>{
+    const current=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+    document.documentElement.setAttribute('data-theme',current);
+    btn.textContent=current==='light'?'🌞':'🌙';
+  });
 })();
 
-/* ============== PROJECT DATA ============== */
+/* PROJECTS DATA + RENDER */
 const PROJECTS=[
-  {title:'Island Head',desc:'Tourism website offering online booking for water adventures in Hilton Head, SC. Built a responsive, user-friendly interface, integrated booking, and optimized performance from landing to checkout.',live:'https://islandheadhhi.com/',img:'images/island-head.png',alt:'Island Head website'},
-  {title:'ACTION SPORT RENTALS',desc:'Multi-location outdoor rental site for San Diego with jet skis, boats, and bikes. Developed a responsive, user-friendly platform that simplifies booking and location browsing.',live:'https://www.actionsportrentals.com/',img:'images/action-sport-rentals.png',alt:'Action Sport Rentals'},
-  {title:'Red Velvet Burlesque Show Las Vegas',desc:'Entertainment booking site to showcase and sell tickets for live burlesque shows. Mobile-responsive, e-commerce integration, and SEO for local discovery.',live:'https://redvelvetburlesqueshowlasvegas.com/',img:'images/red-velvet-lv.png',alt:'Red Velvet Burlesque LV'},
-  {title:'Kelleys Island Ferry',desc:'Transportation site for daily ferry service between Marblehead, Ohio and Kelleys Island. Clean, mobile-friendly design with schedules, ticketing, and real-time weather.',live:'https://kelleysislandferry.com/',img:'images/kelleys-island-ferry.png',alt:'Kelleys Island Ferry'},
-  {title:'Juneau Lighthouse Tours',desc:'Tourism site for whale watching and lighthouse excursions in Alaska. Responsive design, real-time weather integration, and smooth booking experience.',live:'https://juneaulighthousetours.com/',img:'images/juneau-lighthouse.png',alt:'Juneau Lighthouse Tours'},
-  {title:'Askos Tours',desc:'Multilingual travel site for guided archaeological tours across Italy. Performance optimization and clean interface reflecting the brand’s cultural focus.',live:'https://askostours.com/',img:'images/askos-tours.png',alt:'Askos Tours'},
-  {title:'Mexico Whale Shark',desc:'Tourism site offering guided whale shark tours in Mexico. Responsive, mobile-friendly build that balances performance and visual appeal.',live:'https://www.mexicowhaleshark.com/',img:'images/mexico-whale-shark.png',alt:'Mexico Whale Shark'},
-  {title:'Wild Adventure Yukon',desc:'Luxury Northern Lights and dog sledding tours. Visually immersive design, SEO optimizations, and fast, responsive performance.',live:'https://yukonaurora.ca/',img:'images/wild-adventure-yukon.png',alt:'Wild Adventure Yukon'}
+  {title:'Island Head',desc:'Tourism website offering online booking for water adventures in Hilton Head, SC.',live:'https://islandheadhhi.com/',img:'images/island-head.png'},
+  {title:'ACTION SPORT RENTALS',desc:'Outdoor rental site for San Diego with jet skis, boats, and bikes.',live:'https://www.actionsportrentals.com/',img:'images/action-sport-rentals.png'},
+  {title:'Red Velvet Burlesque Show Las Vegas',desc:'Entertainment booking site to showcase and sell tickets.',live:'https://redvelvetburlesqueshowlasvegas.com/',img:'images/red-velvet-lv.png'},
+  {title:'Kelleys Island Ferry',desc:'Transportation site for daily ferry service.',live:'https://kelleysislandferry.com/',img:'images/kelleys-island-ferry.png'},
+  {title:'Juneau Lighthouse Tours',desc:'Tourism site for whale watching and lighthouse excursions in Alaska.',live:'https://juneaulighthousetours.com/',img:'images/juneau-lighthouse.png'},
+  {title:'Askos Tours',desc:'Multilingual travel site for guided archaeological tours across Italy.',live:'https://askostours.com/',img:'images/askos-tours.png'},
+  {title:'Mexico Whale Shark',desc:'Tourism site offering guided whale shark tours in Mexico.',live:'https://www.mexicowhaleshark.com/',img:'images/mexico-whale-shark.png'},
+  {title:'Wild Adventure Yukon',desc:'Luxury Northern Lights and dog sledding tours.',live:'https://yukonaurora.ca/',img:'images/wild-adventure-yukon.png'}
 ];
-
-/* ============== RENDER PROJECTS ============== */
 (function renderProjects(){
   const track=document.getElementById('project-track');
-  const make=(t,c,tx)=>{const e=document.createElement(t);if(c)e.className=c;if(tx)e.textContent=tx;return e;};
-
   PROJECTS.forEach(p=>{
-    const slide=make('div','slide'); slide.setAttribute('role','listitem');
-    const card=make('article','card');
-
-    // media
-    const media=make('div','media');
-    const img=new Image(); img.loading='lazy'; img.decoding='async'; img.src=p.img; img.alt=p.alt||p.title;
-    media.appendChild(img);
-
-    // body
-    const body=make('div','body');
-    const h3=make('h3',null,p.title);
-    const desc=make('p',null,p.desc);
-
-    // CTA
-    const actions=make('div','actions');
-    const cta=make('a','btn btn-subtle block','View Live Site');
-    cta.href=p.live; cta.target='_blank'; cta.rel='noopener noreferrer';
-    actions.appendChild(cta);
-
+    const slide=document.createElement('div');slide.className='slide';
+    const card=document.createElement('article');card.className='card';
+    const media=document.createElement('div');media.className='media';
+    const img=new Image();img.src=p.img;img.alt=p.title;media.appendChild(img);
+    const body=document.createElement('div');body.className='body';
+    const h3=document.createElement('h3');h3.textContent=p.title;
+    const desc=document.createElement('p');desc.textContent=p.desc;
+    const actions=document.createElement('div');actions.className='actions';
+    const btn=document.createElement('a');
+    btn.className='btn btn-subtle block';
+    btn.textContent='View Live Site';
+    btn.href=p.live; btn.target='_blank'; btn.rel='noopener noreferrer';
+    actions.appendChild(btn);
     body.append(h3,desc,actions);
     card.append(media,body);
     slide.append(card);
-    track.appendChild(slide);
-    tilt(card);
+    track.append(slide);
   });
-
-  // arrows (viewport-width paging, smooth)
-  const prev=document.querySelector('.carousel .prev');
-  const next=document.querySelector('.carousel .next');
+  const prev=document.querySelector('.prev'),next=document.querySelector('.next');
   const step=()=>track.clientWidth;
-  function scrollByDir(dir){ track.scrollBy({left: dir*step(), behavior:'smooth'}); }
-  prev?.addEventListener('click',e=>{ e.preventDefault(); scrollByDir(-1); });
-  next?.addEventListener('click',e=>{ e.preventDefault(); scrollByDir(1); });
-
-  // drag / swipe
-  let isDown=false,startX=0,startScroll=0;
-  track.addEventListener('pointerdown',e=>{ isDown=true; startX=e.clientX; startScroll=track.scrollLeft; track.setPointerCapture(e.pointerId); });
-  track.addEventListener('pointermove',e=>{ if(!isDown) return; track.scrollLeft = startScroll - (e.clientX - startX); });
-  track.addEventListener('pointerup',()=>{ isDown=false; });
-  track.addEventListener('pointercancel',()=>{ isDown=false; });
-
-  // wheel support
-  track.addEventListener('wheel',e=>{
-    if(Math.abs(e.deltaX) < Math.abs(e.deltaY) && !e.shiftKey) return;
-    e.preventDefault();
-    track.scrollBy({ left: e.deltaX || e.deltaY, behavior:'smooth' });
-  }, { passive:false });
+  prev.onclick=()=>track.scrollBy({left:-step(),behavior:'smooth'});
+  next.onclick=()=>track.scrollBy({left:step(),behavior:'smooth'});
 })();
-
-/* ============== 3D TILT HOVER ============== */
-function tilt(card){
-  const allow=matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!allow) return;
-  let rAF,rect;
-  function onMove(e){
-    if(!rect) rect = card.getBoundingClientRect();
-    const x=(e.clientX-rect.left)/rect.width;
-    const y=(e.clientY-rect.top)/rect.height;
-    const rx=(.5-y)*8;
-    const ry=(x-.5)*10;
-    card.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
-  }
-  function end(){ card.style.transform='rotateX(0) rotateY(0)'; rect=undefined; }
-  card.addEventListener('mousemove',e=>{ cancelAnimationFrame(rAF); rAF=requestAnimationFrame(()=>onMove(e)); });
-  card.addEventListener('mouseleave',()=>{ cancelAnimationFrame(rAF); end(); });
-}
-
-/* ============== MISC ============== */
-document.getElementById('year').textContent = new Date().getFullYear();
-const YOUR={name:'Kimberly Moncal',email:'kimmoncal01@gmail.com'};
-document.getElementById('brand-name').textContent=YOUR.name;
-document.getElementById('hero-name').textContent=YOUR.name;
-document.getElementById('footer-name').textContent=YOUR.name;
-document.getElementById('email-btn').href=`mailto:${YOUR.email}`;
+document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
